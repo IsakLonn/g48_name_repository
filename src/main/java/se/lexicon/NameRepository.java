@@ -50,31 +50,11 @@ public class NameRepository {
     }
 
     /**
-     * name if found and null if not found.
-     */
-    public static String[] find(final String fullName){
-
-        return Arrays.copyOf(names, names.length);
-    }
-
-    /**
      * Should add a new name to the array. Returns
      * true when name was added and false when the array contains the name.
      */
     public static boolean add(final String fullName) {
-        /*
-        if (find(fullName) != null) {
-            return false;
-        }
-        */
-
-        for (int i = 0; i < names.length; i++) {
-            if(names[i] == fullName)
-            {
-                // name exists, do nothing
-                return false;
-            }
-        }
+        if(contains(names, fullName)) return false;
 
         names = Arrays.copyOf(names, names.length + 1);
         names[names.length - 1] = fullName;
@@ -109,13 +89,6 @@ public class NameRepository {
                 result = Arrays.copyOf(result, result.length+1);
                 result[result.length - 1] = name;
             }
-            /*
-            String[] parts = name.split("");
-            if (parts[1]).equals(lastName)) {
-                result = Arrays.copyOf(result, result.length +1);
-                result[result.length -1] = name;
-            }
-            */
         }
         return result;
     }
@@ -142,8 +115,6 @@ public class NameRepository {
                 copy[index] = names[i];
                 index++;
             }
-
-
         }
 
         if(success) names = copy; // only update name array if successful in removal
@@ -151,6 +122,9 @@ public class NameRepository {
         return success;
     }
 
+    /**
+     helper function, checks if a String array contains a name
+     */
     static boolean contains(String[] arr, String name)
     {
         for (String s : arr) {
