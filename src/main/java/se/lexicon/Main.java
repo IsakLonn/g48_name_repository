@@ -6,12 +6,6 @@ import java.util.Scanner;
 
 public class Main {
 
-    static enum Name
-    {
-        LASTNAME,
-        FIRSTNAME
-    }
-
     static boolean isRunning = true;
 
     public static void main(String[] args) {
@@ -45,7 +39,7 @@ public class Main {
                         names = Arrays.copyOf(names, names.length + 1);
                         names[names.length - 1] = getFullName();
                         println("Want to enter more names? y/n");
-                        if(!Objects.equals(getInput(false).toLowerCase(), "y")) isDone = true;
+                        if(!Objects.equals(getInput().toLowerCase(), "y")) isDone = true;
                     }
                     NameRepository.SetNames(names);
                     break;
@@ -82,7 +76,7 @@ public class Main {
 
                 case 8:
                     println("Are you sure you want to clear all names from the system? y/n");
-                    if(Objects.equals(getInput(false).toLowerCase(), "y")) NameRepository.clear();
+                    if(Objects.equals(getInput().toLowerCase(), "y")) NameRepository.clear();
                     break;
 
                 case 9:
@@ -137,7 +131,7 @@ public class Main {
         while(true)
         {
             exception = false;
-            input = getInput(false);
+            input = getInput();
             try {
             value = Integer.parseInt(input);
             }catch(Exception e){
@@ -149,8 +143,7 @@ public class Main {
 
     }
 
-    static String getInput(boolean askForInput){
-        if(askForInput) println("Input:");
+    static String getInput(){
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -164,13 +157,13 @@ public class Main {
         while(!correctName)
         {
             print("Please give a first name:");
-            firstName = getInput(false);
+            firstName = getInput();
             print("Please give a last name:");
-            lastName = getInput(false);
+            lastName = getInput();
             fullName = firstName + " " + lastName;
             println("The name put in is " + fullName + ". Is this correct? y/n");
 
-            correctName = Objects.equals(getInput(false).toLowerCase(), "y");
+            correctName = Objects.equals(getInput().toLowerCase(), "y");
         }
 
         return fullName;
@@ -187,10 +180,10 @@ public class Main {
         {
             if(isLastName) print("Please give a last name:");
             else print("Please give a first name:");
-            name = getInput(false);
+            name = getInput();
             println("The name put in is " + name + ". Is this correct? y/n");
 
-            correctName = Objects.equals(getInput(false).toLowerCase(), "y");
+            correctName = Objects.equals(getInput().toLowerCase(), "y");
         }
 
         return name;
