@@ -1,5 +1,6 @@
 package se.lexicon;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class Main {
 
         // some variables to use in the switch cases
         String name;
-        String[] names;
+        String[] names = new String[0];
         boolean success;
 
         while(isRunning)
@@ -34,11 +35,19 @@ public class Main {
                 case 1:
                     name = getFullName();
                     boolean containsName = NameRepository.add(name);
-                    if(containsName) println("Name already exists. It wont be added to the system");
+                    if(!containsName) println("Name already exists. It wont be added to the system");
                     break;
 
                 case 2:
-                    
+                    boolean isDone = false;
+                    while(!isDone)
+                    {
+                        names = Arrays.copyOf(names, names.length + 1);
+                        names[names.length - 1] = getFullName();
+                        println("Want to enter more names? y/n");
+                        if(!Objects.equals(getInput(false).toLowerCase(), "y")) isDone = true;
+                    }
+                    NameRepository.SetNames(names);
                     break;
 
                 case 3:
@@ -87,9 +96,6 @@ public class Main {
                     isRunning = false;
                     break;
             }
-
-
-            getInput(false);
         }
     }
 
@@ -97,7 +103,7 @@ public class Main {
         println("welcome to the name repository!");
         println("Enter what you would like to do:");
         println("1. Add a name");
-        println("2. Add multiple names NOT IMPLEMENTED");
+        println("2. Add multiple names");
         println("3. Update a name in the system");
         println("4. Get all names in the system");
         println("5. Get how many names are in the system");
